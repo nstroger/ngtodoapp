@@ -14,7 +14,7 @@ import { environment } from '../../environments/environment';
     CommonModule,
     HttpClientModule,
     environment.production ?
-      [] : HttpClientInMemoryWebApiModule.forRoot(TodoDBService, { delay: 1000 }),
+      [] : HttpClientInMemoryWebApiModule.forRoot(TodoDBService, { delay: 400 }),
   ],
   declarations: [],
   providers: [

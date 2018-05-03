@@ -27,8 +27,9 @@ export class TodoCreateComponent implements OnInit {
   addTodo(ev) {
     ev.preventDefault();
 
-    console.log(this.todoForm.value);
-    this.todos.addItem(this.todoForm.value.itemText);
-    this.router.navigate(['/todos/list']);
+    this.todos.addItem(this.todoForm.value.itemText)
+      .subscribe(() => {
+        this.router.navigate(['/todos/list']);
+      });
   }
 }

@@ -10,4 +10,16 @@ export class ApiService {
     return this.httpClient.get('api/todos');
   }
 
+  addTodoItem(newTodo) {
+    return this.httpClient.post('api/todos', newTodo);
+  }
+
+  updateTodoItem(item) {
+    return this.httpClient.put('api/todos', item);
+  }
+
+  deleteTodoItem(item) {
+    return this.httpClient.delete('api/todos/' + item.id);
+  }
+
 }

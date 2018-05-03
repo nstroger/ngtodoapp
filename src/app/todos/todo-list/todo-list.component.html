@@ -24,16 +24,16 @@
           <td>
             <a
               class="button is-danger"
-              (click)="deleteItem(item)"
+              (click)="deleteItem(item, $event)"
             >
               <i class="far fa-trash-alt" title="Delete"></i>
             </a>
           </td>
         </tr>
-        <tr *ngIf="!isFetched">
+        <tr *ngIf="loading">
           <td colspan="3" class="has-text-centered">Loading...</td>
         </tr>
-        <tr *ngIf="isFetched && items.length===0">
+        <tr *ngIf="!loading && items.length===0">
           <td colspan="3" class="has-text-centered">No todos found.</td>
         </tr>
       </tbody>

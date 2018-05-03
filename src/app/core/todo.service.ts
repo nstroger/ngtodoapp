@@ -4,43 +4,38 @@ import { findIndex, uniqBy } from 'lodash';
 import { TodoItem } from '../models/todoitem';
 import { ApiService } from './api.service';
 
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/switchMap';
+
 @Injectable()
 export class TodoService {
-
-  items = new BehaviorSubject<TodoItem[]>([]);
-  itemsFetched = new BehaviorSubject(false);
 
   constructor(private api: ApiService) { }
 
   fetchItems() {
-    if (!this.itemsFetched.value) {
-      this.api.getTodoItems()
-        .subscribe((items: TodoItem[]) => {
-          this.addTodoItems(items);
-          this.itemsFetched.next(true);
-        });
-    }
+    return this.api.getTodoItems();
   }
 
   addItem(text) {
-    const count = this.items.value.length;
-    const newId = count ? this.items.value[count - 1].id + 1 : 1;
-
-    const newTodo = new TodoItem(newId, text, false);
-    this.addTodoItems([newTodo]);
+    return this.api.addTodoItem({
+        text,
+        completed: false
+      });
   }
 
-  addTodoItems(items: TodoItem[]) {
-    const newItems = uniqBy([
-      ...this.items.value,
-      ...items
-    ], 'id');
-
-    this.items.next(newItems);
+  toggleItem(item: TodoItem) {
+    return this.api.updateTodoItem({
+        id: item.id,
+        text: item.text,
+        completed: !item.completed
+      })
+      .switchMap((updated: TodoItem) =>
+        this.fetchItems()
+      );
   }
 
   deleteItem(item: TodoItem) {
-    const i = findIndex(this.items.value, item);
-    this.items.value.splice(i, 1);
+    return this.api.deleteTodoItem(item)
+      .switchMap(() => this.fetchItems());
   }
 }

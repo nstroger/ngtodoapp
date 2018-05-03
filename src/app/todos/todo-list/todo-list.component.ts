@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { TodoService } from '../../core/todo.service';
 import { TodoItem } from '../../models/todoitem';
@@ -8,37 +8,34 @@ import { TodoItem } from '../../models/todoitem';
   templateUrl: './todo-list.component.html',
   styleUrls: ['./todo-list.component.scss']
 })
-export class TodoListComponent implements OnInit, OnDestroy {
+export class TodoListComponent implements OnInit {
 
   items: TodoItem[] = [];
-  items$: any;
-  isFetched = false;
-  isFetched$: any;
+  loading = true;
 
   constructor(private todos: TodoService) { }
 
   ngOnInit() {
-    this.todos.fetchItems();
-    this.items$ = this.todos.items
+    this.todos.fetchItems()
       .subscribe((items: TodoItem[]) => {
         this.items = items;
+        this.loading = false;
       });
-    this.isFetched$ = this.todos.itemsFetched
-      .subscribe((isFetched: boolean) => {
-        this.isFetched = isFetched;
-      });
-  }
-
-  ngOnDestroy() {
-    this.items$.unsubscribe();
-    this.isFetched$.unsubscribe();
   }
 
   toggleComplete(item: TodoItem) {
-    item.completed = !item.completed;
+    this.todos.toggleItem(item)
+      .subscribe((items: TodoItem[]) => {
+        this.items = items;
+      });
   }
 
-  deleteItem(item: TodoItem) {
-    this.todos.deleteItem(item);
+  deleteItem(item: TodoItem, ev) {
+    ev.stopPropagation();
+
+    this.todos.deleteItem(item)
+      .subscribe((items: TodoItem[]) => {
+        this.items = items;
+      });
   }
 }
