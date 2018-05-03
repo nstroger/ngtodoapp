@@ -7,14 +7,12 @@ import { ApiService } from './api.service';
 import { TodoService } from './todo.service';
 
 import { TodoDBService } from '../db/todo';
-import { environment } from '../../environments/environment';
 
 @NgModule({
   imports: [
     CommonModule,
     HttpClientModule,
-    environment.production ?
-      [] : HttpClientInMemoryWebApiModule.forRoot(TodoDBService, { delay: 400 }),
+    HttpClientInMemoryWebApiModule.forRoot(TodoDBService, { delay: 400 }),
   ],
   declarations: [],
   providers: [
