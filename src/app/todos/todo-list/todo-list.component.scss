@@ -1,0 +1,10 @@
+tr {
+  &:hover {
+    background-color: #fafafa;
+    cursor: pointer;
+  }
+
+  &.completed td {
+    text-decoration: line-through;
+  }
+}

@@ -1,0 +1,40 @@
+<div class="container">
+  <section class="section">
+    <h1 class="title">Create Todo</h1>
+    <h2 class="subtitle">
+      Add an item
+    </h2>
+
+    <form
+      [formGroup]="todoForm"
+      (submit)="addTodo($event)"
+    >
+      <div class="field">
+        <label class="label">Text</label>
+        <div class="control">
+          <input
+            class="input"
+            type="text"
+            name="itemText"
+            placeholder="Text input"
+            formControlName="itemText"
+          >
+          <p
+            *ngIf="todoForm.get('itemText').touched &&
+                   todoForm.get('itemText').hasError('required')"
+            class="help is-danger"
+          >
+            Item text is required.
+          </p>
+        </div>
+      </div>
+      <button
+        type="submit"
+        class="button is-primary"
+        [disabled]="!todoForm.valid"
+      >
+        Add
+      </button>
+    </form>
+  </section>
+</div>

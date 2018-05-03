@@ -1,0 +1,33 @@
+<nav class="navbar is-dark" role="navigation" aria-label="main navigation">
+  <div class="container is-size-6 is-size-7-mobile">
+    <div class="navbar-brand">
+      <a class="navbar-item" id="navbar-logo" routerLink="/">
+        Todo App
+      </a>
+      <button class="button is-primary navbar-burger" id="navbar-burger" data-target="navMenu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div class="navbar-menu" id="navMenu">
+      <div class="navbar-start">
+        <a class="navbar-item is-active" routerLink="/home">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" routerLink="/todos">Todos </a>
+          <div class="navbar-dropdown is-size-6 is-size-7-mobile">
+            <a class="navbar-item" routerLink="/todos/list">
+              <span class="is-hidden-desktop" style="padding-left:1rem">- </span>
+              <span>List</span>
+            </a>
+            <a class="navbar-item" routerLink="/todos/create">
+              <span class="is-hidden-desktop" style="padding-left:1rem">- </span>
+              <span>Add</span>
+            </a>
+          </div>
+        </div>
+        <br>
+      </div>
+    </div>
+  </div>
+</nav>

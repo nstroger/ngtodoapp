@@ -1,0 +1,45 @@
+<div class="container">
+  <section class="section">
+    <h1 class="title">Todos</h1>
+    <h2 class="subtitle">
+      Here is the list of Todo items.
+    </h2>
+
+    <table class="table is-fullwidth">
+      <thead>
+        <tr>
+          <th style="width: 40px">No</th>
+          <th>Todo</th>
+          <th style="width: 40px"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let item of items; let i = index"
+          [class.completed]="item.completed"
+          (click)="toggleComplete(item)"
+        >
+          <td>{{ i + 1 }}</td>
+          <td>{{ item.text }}</td>
+          <td>
+            <a
+              class="button is-danger"
+              (click)="deleteItem(item)"
+            >
+              <i class="far fa-trash-alt" title="Delete"></i>
+            </a>
+          </td>
+        </tr>
+        <tr *ngIf="!isFetched">
+          <td colspan="3" class="has-text-centered">Loading...</td>
+        </tr>
+        <tr *ngIf="isFetched && items.length===0">
+          <td colspan="3" class="has-text-centered">No todos found.</td>
+        </tr>
+      </tbody>
+    </table>
+    <a routerLink="/todos/create" class="button is-primary">
+      Add Item
+    </a>
+  </section>
+</div>
